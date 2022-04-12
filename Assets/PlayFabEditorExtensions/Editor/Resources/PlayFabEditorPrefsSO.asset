@@ -13,11 +13,11 @@ MonoBehaviour:
   m_Name: PlayFabEditorPrefsSO
   m_EditorClassIdentifier: 
   DevAccountEmail: ishida.tomohiro@opus.co.jp
-  DevAccountToken: mo1jizi3kmyoi7mj4ih5ehm77kxgnumfd3yniqekgci3grsmjws1o34aegne66qchmq1zxyiitoju5jo8m8brpe6y1pb8z13s6frpm33pnbpczmho3kp4a43tcqmr4bbkg3h3cxixk4ufppixh9n3wktdkci17fx95up5um7pnmnd8up9nare3fnq597yzgesga8m34u
+  DevAccountToken: mwcok45dpapqto6siyhfksas55b1ku5bpjz4n8nrgemobioqw9jd4gpri1kw1sgmrz4dsbabaxef66x3zhjm5ygob71pyace9dngdze8sx971wwc97rhrdgd4gw7ixebi6wwtm73mqnkw3g1cgmcswzc8hyb7w34naty4gwxx4ejhjsuofr7qd38gbmw3d43x183jc9e
   SelectedStudio: My Game Studio
   SdkPath: Assets/PlayFabSDK
   EdExPath: 
-  LocalCloudScriptPath: 
+  LocalCloudScriptPath: C:/Users/totoz/Documents/GitHub/unity/PhotonTest002/Assets/PlayFabEditorExtensions/Editor/Resources/.CloudScript.js
   PanelIsShown: 0
-  curMainMenuIdx: 1
+  curMainMenuIdx: 0
   curSubMenuIdx: 0

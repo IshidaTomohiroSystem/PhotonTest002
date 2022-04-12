@@ -15,7 +15,7 @@ MonoBehaviour:
   TitleId: CB19E
   DeveloperSecretKey: MIEYF8EBBKUUXPQHKZ79UR5CQ9MJ54OOPKAANF494BMI1ZATQ9
   ProductionEnvironmentUrl: 
-  RequestType: 0
+  RequestType: 2
   DisableDeviceInfo: 0
   DisableFocusTimeCollection: 0
   RequestTimeout: 2000

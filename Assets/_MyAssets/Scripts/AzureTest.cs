@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using UnityEngine;
 using PlayFab;
 using PlayFab.ClientModels;
@@ -7,6 +8,7 @@ using PlayFab.CloudScriptModels;
 
 public class AzureTest : MonoBehaviour
 {
+    string playerID;
     // Start is called before the first frame update
     void Start()
     {
@@ -20,6 +22,21 @@ public class AzureTest : MonoBehaviour
         {
             CallCSharpExecuteFunction();
         }
+
+        if(Input.GetKeyDown(KeyCode.S))
+        {
+            SetUserData();
+        }
+
+        if(Input.GetKeyDown(KeyCode.P))
+        {
+            GetPlayerInfo();
+        }
+
+        if (Input.GetKeyDown(KeyCode.G))
+        {
+            GetUserData(playerID);
+        }
     }
 
     private void Login()
@@ -27,16 +44,68 @@ public class AzureTest : MonoBehaviour
         PlayFabClientAPI.LoginWithCustomID(
             new LoginWithCustomIDRequest
             {
-                CustomId = "test001",
+                CustomId = "test002",
                 CreateAccount = true
             },
             result => {
                 Debug.Log("Login success");
+                LoginSuccess();
             },
             error => {
                 Debug.Log(error);
             }
         );
+    }
+
+    private void LoginSuccess()
+    {
+        SetUserData();
+    }
+
+    void GetPlayerInfo()
+    {
+        GetAccountInfoRequest request = new GetAccountInfoRequest();
+        PlayFabClientAPI.GetAccountInfo(
+            request,
+            result => {
+                playerID = result.AccountInfo.PlayFabId;
+                Debug.Log("playerID success");
+            },
+            error => {
+                Debug.Log(error);
+            }
+        );
+    }
+    void SetUserData()
+    {
+        PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+        {
+            Data = new Dictionary<string, string>() {
+            {"Ancestor", "Arthur"},
+            {"Successor", "Fred"}
+        }
+        },
+        result => Debug.Log("Successfully updated user data"),
+        error => {
+            Debug.Log("Got error setting user data Ancestor to Arthur");
+            Debug.Log(error.GenerateErrorReport());
+        });
+    }
+
+    void GetUserData(string myPlayFabeId)
+    {
+        PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+        {
+            PlayFabId = myPlayFabeId,
+            Keys = null
+        }, result => {
+            Debug.Log("Got user data:");
+            if (result.Data == null || !result.Data.ContainsKey("Ancestor")) Debug.Log("No Ancestor");
+            else Debug.Log("Ancestor: " + result.Data["Ancestor"].Value);
+        }, (error) => {
+            Debug.Log("Got error retrieving user data:");
+            Debug.Log(error.GenerateErrorReport());
+        });
     }
 
     private void CallCSharpExecuteFunction()

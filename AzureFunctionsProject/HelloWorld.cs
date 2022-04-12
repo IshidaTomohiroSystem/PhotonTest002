@@ -23,8 +23,19 @@ namespace Company.Function
             [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestMessage req,
             ILogger log)
         {
+            var context = await FunctionContext<dynamic>.Create(req);
+            var args = context.FunctionArgument;
+
+            var message = $"CurrentPlayerId: {context.CurrentPlayerId}!";
+            log.LogInformation(message);
+            // POSTボディ入力パラメータを確認
+            dynamic inputValue = null;
+            inputValue = args["inputValue"];
+
+            message += $"  args: {new { input = inputValue } }";
+
             var internalData = await Get();
-            var message = internalData;//$"  internalData[Message] = {internalData["Message"]}";
+            message += $"  internalData[Message] = {internalData["Message"]}";
 
             return new { messageValue = message };
         }

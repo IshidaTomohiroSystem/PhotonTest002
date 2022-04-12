@@ -8,6 +8,8 @@ using System.Threading;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using PlayFab;
+using PlayFab.ClientModels;
 
 public enum Commands
 { 
@@ -146,6 +148,7 @@ public class JankenView : MonoBehaviour
 				break;
 			case BattleResult.Win:
 				_messageText.text = "You Win!";
+				GetUserData();
 				break;
 			case BattleResult.Lose:
 				_messageText.text = "You Lose...";
@@ -155,5 +158,67 @@ public class JankenView : MonoBehaviour
 		await UniTask.Delay(3000, cancellationToken: cancelToken);
 
 		InitGame();
+	}
+
+	private void SubmitScore(int score)
+	{
+		PlayFabClientAPI.UpdatePlayerStatistics(
+			new UpdatePlayerStatisticsRequest
+			{
+				Statistics = new List<StatisticUpdate>()
+				{
+					new StatisticUpdate
+					{
+						StatisticName = "Janken",
+						Value = score
+					}
+				}
+			},
+			result => Debug.Log("score update"),
+			error => Debug.Log(error)
+		);
+	}
+
+	void GetUserData()
+	{
+		PlayFabClientAPI.GetUserData(new GetUserDataRequest()
+		{
+			PlayFabId = "",
+			Keys = null
+		}, result => {
+			Debug.Log("Got user data:");
+			if (result.Data == null || !result.Data.ContainsKey("Rank"))
+			{
+				Debug.Log("No Rank");
+				SubmitScore(0);
+			}
+			else
+			{
+				Debug.Log("Rank: " + result.Data["Rank"].Value);
+				int updateScore = int.Parse(result.Data["Rank"].Value) + 1;
+				SetUserData(updateScore);
+			}
+		}, (error) => {
+			Debug.Log("Got error retrieving user data:");
+			Debug.Log(error.GenerateErrorReport());
+		});
+	}
+
+	void SetUserData(int score)
+	{
+		PlayFabClientAPI.UpdateUserData(new UpdateUserDataRequest()
+		{
+			Data = new Dictionary<string, string>() {
+			{"Rank", score.ToString()}
+		}
+		},
+		result => {
+			Debug.Log("Successfully updated user data");
+			SubmitScore(score);
+		},
+		error => {
+			Debug.Log("Got error setting user data Ancestor to Arthur");
+			Debug.Log(error.GenerateErrorReport());
+		});
 	}
 }
