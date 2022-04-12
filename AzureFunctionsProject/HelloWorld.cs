@@ -8,28 +8,37 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Newtonsoft.Json;
 
+using System.Net.Http;
+using PlayFab.Plugins.CloudScript;
+using System.Collections.Generic;
+using PlayFab.ServerModels;
+using PlayFab;
+
 namespace Company.Function
 {
     public static class HelloWorld
     {
         [FunctionName("HelloWorld")]
-        public static async Task<IActionResult> Run(
-            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequest req,
+        public static async Task<dynamic> Run(
+            [HttpTrigger(AuthorizationLevel.Anonymous, "get", "post", Route = null)] HttpRequestMessage req,
             ILogger log)
         {
-            log.LogInformation("C# HTTP trigger function processed a request.");
+            var internalData = await Get();
+            var message = internalData;//$"  internalData[Message] = {internalData["Message"]}";
 
-            string name = req.Query["name"];
+            return new { messageValue = message };
+        }
 
-            string requestBody = await new StreamReader(req.Body).ReadToEndAsync();
-            dynamic data = JsonConvert.DeserializeObject(requestBody);
-            name = name ?? data?.name;
+        [HttpGet]
+        public static async Task<Dictionary<string, string>> Get()
+        {
+            PlayFabSettings.staticSettings.TitleId = "CB19E";
+            PlayFabSettings.staticSettings.DeveloperSecretKey = "MIEYF8EBBKUUXPQHKZ79UR5CQ9MJ54OOPKAANF494BMI1ZATQ9";
 
-            string responseMessage = string.IsNullOrEmpty(name)
-                ? "This HTTP triggered function executed successfully. Pass a name in the query string or in the request body for a personalized response."
-                : $"Hello, {name}. This HTTP triggered function executed successfully.";
+            var request = new GetTitleDataRequest();
+            var titleInternalData = await PlayFabServerAPI.GetTitleInternalDataAsync(request);
 
-            return new OkObjectResult(responseMessage);
+            return titleInternalData.Result.Data;
         }
     }
 }
