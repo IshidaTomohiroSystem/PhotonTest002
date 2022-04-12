@@ -1,0 +1,52 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &301591866801781076
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8392354048965831367}
+  - component: {fileID: 178529447210982868}
+  m_Layer: 0
+  m_Name: Janken
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8392354048965831367
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301591866801781076}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &178529447210982868
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 301591866801781076}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 940adbb57c74947428936f8bd0e7510b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _commandButton1: {fileID: 7307601366628821926, guid: 233ab0846d5675d4f9f21145c91dc67a, type: 3}
+  _commandButton2: {fileID: 4298500920943301657, guid: f709f880d62341443be71514991ed15a, type: 3}
+  _commandButton3: {fileID: 4456225495511871492, guid: 5e876d979701b6044a96614e844c9b1a, type: 3}
+  _selfDisplay: {fileID: 1979579766684774828, guid: b51cf1248cef77a4dafdb79d35fcee43, type: 3}
+  _rivalDisplay: {fileID: 1979579766684774828, guid: b51cf1248cef77a4dafdb79d35fcee43, type: 3}
+  _rivalName: {fileID: 1063577340993853700, guid: 1284b789542746847bb697a672607def, type: 3}
+  _messageText: {fileID: 877900388439909555, guid: 0b4ec02e12df60646b242018b73f90d6, type: 3}
